@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: keyauth-proxy
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 2 -b 0.0.0.0:$PORT keyauth_proxy:app
+    envVars:
+      - key: PROXY_SECRET_HEX
+        sync: false
+    healthCheckPath: /healthz
